@@ -1,9 +1,15 @@
 const express = require('express');
+const Test = require('../services/test.services');
+
+
+const service = new Test();
 
 const router = express.Router();
 
 router.get('/', async ( req, res ) => {
-    res.json({msg: 'hola desde el back'})
+    const  test = await service.test();
+    res.json(test)
+
 });
 
 module.exports = router;
