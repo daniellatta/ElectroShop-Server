@@ -9,7 +9,6 @@ const router = express.Router();
 router.get('/', async ( req, res ) => {
     const  test = await service.test();
     res.json(test)
-
 });
 
 module.exports = router;
