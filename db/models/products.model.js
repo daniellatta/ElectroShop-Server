@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize');
 const { CATEGORY_TABLE } = require('./category.model');
 
 
-const PRODUCT_TABLE = 'product';
+const PRODUCT_TABLE = 'products';
 
 const ProductSchema = {
     id: {

@@ -4,7 +4,7 @@ const id = Joi.number().integer();
 const name = Joi.string();
 const description = Joi.string();
 const image = Joi.string();
-const stock = Joi.number().integer();
+const stock = Joi.number().integer().min(0);
 const price = Joi.number().precision(2);
 const categoryId = Joi.number().integer();
 

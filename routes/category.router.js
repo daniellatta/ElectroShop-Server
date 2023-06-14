@@ -11,6 +11,16 @@ router.get('/', async ( req, res ) => {
     res.json(categories);
 });
 
+router.get('/generate/:num', async ( req, res, next ) => {
+    const { num } = req.params;
+    try {
+        const response = await service.generateCategory(num);
+        res.json(response);
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.get('/:id', validorHanlder(searchCategory, 'params'), async ( req, res, next ) => {
     const { id } = req.params
     try {
