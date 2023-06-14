@@ -6,6 +6,35 @@ const { createProduct, searchProduct } = require('../schemas/product.schema');
 const router = express.Router();
 const service = new ProductService();
 
+/**
+ * @swagger
+ * /product:
+ *   get:
+ *     tags:
+ *       - Products
+ *     summary: Endpoint para consultar todos los articulos
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                  $ref: '#/components/schemas/Product'
+ *       409:
+ *         description: Error en database
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorDataBase'
+ *       500:
+ *         description: Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorServer'
+ */
 router.get('/', async ( req, res, next ) => {
     try {
         const products = await service.findAllProducts();
@@ -15,6 +44,48 @@ router.get('/', async ( req, res, next ) => {
     }
 });
 
+/**
+ * @swagger
+ * /product/find/{name}:
+ *   get:
+ *     tags:
+ *       - Products
+ *     summary: Endpoint para buscar productos que coincidan por un nombre
+ *     description: Retorna un array de productos
+ *     operationId: getProductByName
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         description: Nombre del producto a buscar
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorBadRequest'
+ *       404:
+ *         description: Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorNotFound'
+ *       409:
+ *         description: Error en database
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorDataBase'
+ *       500:
+ *         description: Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorServer'
+ */
 router.get('/find/:name', validorHanlder(searchProduct, 'params'), async ( req, res, next ) => {
     const { name } = req.params;
     try {
@@ -25,6 +96,54 @@ router.get('/find/:name', validorHanlder(searchProduct, 'params'), async ( req, 
     }
 });
 
+/**
+ * @swagger
+ * /product/{id}:
+ *   get:
+ *     tags:
+ *       - Products
+ *     summary: Endpoint para buscar un producto por id
+ *     description: Retora solo un producto OJO no funciona el Try in out en este componente por temas del swagger
+ *     operationId: getProductById
+ *     parameters:
+ *       - in: path
+ *         name: ID producto
+ *         description: ID del producto a buscar
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                 $ref: '#/components/schemas/Product'
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorBadRequest'
+ *       404:
+ *         description: Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorNotFound'
+ *       409:
+ *         description: Error en database
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorDataBase'
+ *       500:
+ *         description: Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorServer'
+ */
 router.get('/:id', validorHanlder(searchProduct, 'params'), async ( req, res, next ) => {
     const { id } = req.params;
     try {
@@ -35,6 +154,57 @@ router.get('/:id', validorHanlder(searchProduct, 'params'), async ( req, res, ne
     }
 });
 
+/**
+ * @swagger
+ * /product:
+ *   post:
+ *     tags:
+ *       - Products
+ *     summary: Endpoint para crear un producto
+ *     description: Agregar un nuevo producto al ecomerce
+ *     operationId: addProduct
+ *     requestBody:
+ *       description: Elementos requeridos para crear un producto
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/ProductCreate'
+ *         application/xml:
+ *           schema:
+ *             $ref: '#/components/schemas/ProductCreate'
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             $ref: '#/components/schemas/ProductCreate'
+ *     responses:
+ *       200:
+ *         description: Articulo creado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProductResponseCreate'          
+ *           application/xml:
+ *             schema:
+ *               $ref: '#/components/schemas/ProductResponseCreate'
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorBadRequest'
+ *       409:
+ *         description: Error en database
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorDataBase'
+ *       500:
+ *         description: Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorServer'
+ */
 router.post('/', validorHanlder(createProduct, 'body'), async ( req, res, next ) => {
     const body = req.body
     try {
@@ -52,16 +222,6 @@ router.get('/generate/:num', async ( req, res, next ) => {
         res.json(generate);
     } catch (error) {
         console.log('entra');
-        next(error);
-    }
-});
-
-router.get('/:id', validorHanlder(searchProduct, 'params'), async ( req, res, next ) => {
-    const { id } = req.params;
-    try {
-        const product = await service.findById(id);
-        res.json(product);
-    } catch (error) {
         next(error);
     }
 });
