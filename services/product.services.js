@@ -1,14 +1,17 @@
-const { models } = require('../libs/sequelize');
 const boom = require('@hapi/boom');
+const { faker } = require('@faker-js/faker');
+const { Op } = require('sequelize');
+const { models } = require('../libs/sequelize');
 const CategoryService = require('./category.services');
 
 const service = new CategoryService();
 
 class ProductService {
-  constructor(){}
+  constructor(){
+  }
   
   async createProduct(data) {
-    const category = await service.findCategory(data.categoryId);
+    await service.findCategory(data.categoryId);
     const product = await models.Product.create(data);
     return product;
   }
@@ -22,6 +25,34 @@ class ProductService {
         throw boom.notFound(`No se enecuntrar datos cargados en la base de datos`);
     }
     return products;
+  }
+
+  async findByName(name) {
+    const product = await models.Product.findAll({
+      where: {
+        name: {
+            [Op.iLike]: `%${name}%`
+        }
+    }
+    });
+    if(!product) {
+      throw boom.notFound('Producto no encontrado');
+    }
+    return product
+  }
+
+  async generateProducts(num) {
+    for (let i = 0; i < num; i++) {
+      await models.Product.create({
+        name: faker.commerce.productName(),
+        description: faker.commerce.productDescription(),
+        image: faker.image.cats(),
+        stock: 0,
+        price: faker.commerce.price(),
+        categoryId: 1
+      });
+    }
+    return { msg: `${num} products creado correctamente`}
   }
 }
 
