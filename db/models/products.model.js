@@ -41,6 +41,9 @@ const ProductSchema = {
           },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
+    },
+    review: {
+        type: DataTypes.DECIMAL(2,1)
     }
 }
 
@@ -48,6 +51,10 @@ class Product extends Model {
     static associate(models){
         //Relaciones
         this.belongsTo(models.Category, { as: 'category' });
+        this.hasMany(models.Review, {
+            as: 'reviews',
+            foreignKey: 'productId'
+        });
     }
 
     static config(sequelize) {

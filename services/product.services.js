@@ -41,6 +41,25 @@ class ProductService {
     return product
   }
 
+  async findById(id) {
+    const product = await models.Product.findByPk(id, {
+      include: ['category', {
+          model: models.Review,
+          as: 'reviews',
+          include: {
+          model: models.User,
+          as: 'user',
+          attributes: ['id', 'name'] // Selecciona los atributos del usuario que deseas incluir
+        }
+      }],
+      attributes: { exclude: ['categoryId'] }
+    });
+    if(!product) {
+      throw boom.notFound(`Producto con id: ${id} no encontrado`);
+    }
+    return product;
+  }
+
   async generateProducts(num) {
     for (let i = 0; i < num; i++) {
       await models.Product.create({
