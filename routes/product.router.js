@@ -25,6 +25,16 @@ router.get('/find/:name', validorHanlder(searchProduct, 'params'), async ( req, 
     }
 });
 
+router.get('/:id', validorHanlder(searchProduct, 'params'), async ( req, res, next ) => {
+    const { id } = req.params;
+    try {
+        const product = await service.findById(id);
+        res.json(product);
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.post('/', validorHanlder(createProduct, 'body'), async ( req, res, next ) => {
     const body = req.body
     try {
@@ -42,6 +52,16 @@ router.get('/generate/:num', async ( req, res, next ) => {
         res.json(generate);
     } catch (error) {
         console.log('entra');
+        next(error);
+    }
+});
+
+router.get('/:id', validorHanlder(searchProduct, 'params'), async ( req, res, next ) => {
+    const { id } = req.params;
+    try {
+        const product = await service.findById(id);
+        res.json(product);
+    } catch (error) {
         next(error);
     }
 });
