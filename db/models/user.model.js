@@ -9,8 +9,18 @@ const UserSchema = {
         autoIncrement: true,
         type: DataTypes.INTEGER
     },
+    dni: {
+        allowNull: false,
+        unique: true,
+        type: DataTypes.INTEGER
+    },
     name: {
         allowNull: false,
+        type: DataTypes.STRING
+    },
+    username:{
+        allowNull: false,
+        unique: true,
         type: DataTypes.STRING
     },
     email: {
@@ -22,8 +32,17 @@ const UserSchema = {
         allowNull: false,
         type: DataTypes.STRING
     },
+    birthDate: {
+        field:'birth_date',
+        allowNull: false,
+        type: DataTypes.DATEONLY
+    },
     adress: {
         allowNull: false, 
+        type: DataTypes.STRING
+    },
+    city: {
+        allowNull: false,
         type: DataTypes.STRING
     },
     phoneNumber: {
@@ -36,7 +55,6 @@ const UserSchema = {
         allowNull: false,
         defaultValue: false,
         type: DataTypes.BOOLEAN
-        
     },
     active: {
         allowNull: false,
