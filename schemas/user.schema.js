@@ -18,6 +18,7 @@ const createUser = Joi.object({
 });
 
 const updateUser = Joi.object({
+    id : id.required(),
     name,
     email,
     password,

@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
+const cors = require('cors');
 const routerApi = require('./routes/index');
 const { boomErrorHandler, errorHanlder, errroHablderDb, logError } = require('./middleware/error.hanlder');
 
@@ -27,6 +28,7 @@ const options = {
 };
 const swaggerSpec = swaggerJSDoc(options);
 
+app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
