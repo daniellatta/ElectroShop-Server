@@ -1,16 +1,38 @@
 const express = require('express');
 const morgan = require('morgan');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
 const routerApi = require('./routes/index');
 const { boomErrorHandler, errorHanlder, errroHablderDb, logError } = require('./middleware/error.hanlder');
 
 const app = express();
 const PORT = 8080;
 
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'ElectroShop API',
+            version: '1.0.0',
+            description: 'API necesariara para operar un pequeño eComerce'
+        },
+        servers: [
+            {
+                url: "http://localhost:8080/api/v1",
+                description: "API a consumir",
+            }
+        ]
+    },
+    apis: ['./routes/*.js'],
+};
+const swaggerSpec = swaggerJSDoc(options);
+
 app.use(express.json());
 app.use(morgan('dev'));
 
 //Router
 routerApi(app);
+app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //middleware
 app.use(logError);
