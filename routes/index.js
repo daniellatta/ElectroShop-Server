@@ -37,6 +37,58 @@ const reviewRouter = require('./review.router');
  *         category:
  *           $ref: '#/components/schemas/Category'
  * 
+ *     ProductDetail:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: Gorgeous Cotton Pizza
+ *         description:
+ *           type: string
+ *           example: The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design
+ *         image:
+ *           type: string
+ *           format: uri
+ *           example: https://loremflickr.com/640/480/cats
+ *         stock:
+ *           type: integer
+ *           example: 0
+ *         price:
+ *           type: string
+ *           example: "907.00"
+ *         review:
+ *           type: string
+ *           example: null / 3.9
+ *         category:
+ *           $ref: '#/components/schemas/Category'
+ *         reviews:
+ *           type: array
+ *           items:
+ *              type: object
+ *              properties:
+ *                  id:
+ *                      type: integer
+ *                      example: 1
+ *                  rating:
+ *                      type: integer
+ *                      example: 4
+ *                  review:
+ *                      type: string
+ *                      example: Descripcion de la reseña
+ *                  user:
+ *                      type: object
+ *                      properties:
+ *                          id:
+ *                              type: integer
+ *                              example: 5
+ *                          name:
+ *                              type: string
+ *                              example: Juanitokun
+ *              
+ * 
  *     ProductResponseCreate:
  *       type: object
  *       properties:

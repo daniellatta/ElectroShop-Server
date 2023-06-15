@@ -118,7 +118,7 @@ router.get('/find/:name', validorHanlder(searchProduct, 'params'), async ( req, 
  *         content:
  *           application/json:
  *             schema:
- *                 $ref: '#/components/schemas/Product'
+ *                 $ref: '#/components/schemas/ProductDetail'
  *       400:
  *         description: Bad Request
  *         content:
@@ -192,6 +192,12 @@ router.get('/:id', validorHanlder(searchProduct, 'params'), async ( req, res, ne
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorBadRequest'
+ *       404:
+ *         description: Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorNotFound'
  *       409:
  *         description: Error en database
  *         content:

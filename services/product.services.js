@@ -50,9 +50,11 @@ class ProductService {
           model: models.User,
           as: 'user',
           attributes: ['id', 'name'] // Selecciona los atributos del usuario que deseas incluir
+        },
+        attributes: {
+          exclude: ['userId', 'productId'] //Quita esas columnas de la primiedad reviews
         }
-      }],
-      attributes: { exclude: ['categoryId'] }
+      }]
     });
     if(!product) {
       throw boom.notFound(`Producto con id: ${id} no encontrado`);
