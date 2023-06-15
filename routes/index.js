@@ -5,6 +5,256 @@ const productRouter = require('./product.router');
 const userRouter = require('./user.router')
 const reviewRouter = require('./review.router');
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Product:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: Gorgeous Cotton Pizza
+ *         description:
+ *           type: string
+ *           example: The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design
+ *         image:
+ *           type: string
+ *           format: uri
+ *           example: https://loremflickr.com/640/480/cats
+ *         stock:
+ *           type: integer
+ *           example: 0
+ *         price:
+ *           type: string
+ *           example: "907.00"
+ *         review:
+ *           type: string
+ *           example: null / 3.9
+ *         category:
+ *           $ref: '#/components/schemas/Category'
+ * 
+ *     ProductResponseCreate:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: Gorgeous Cotton Pizza
+ *         description:
+ *           type: string
+ *           example: The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design
+ *         image:
+ *           type: string
+ *           format: uri
+ *           example: https://loremflickr.com/640/480/cats
+ *         stock:
+ *           type: integer
+ *           example: 0
+ *         price:
+ *           type: string
+ *           example: "907.00"
+ *         review:
+ *           type: null
+ *           example: null
+ *         categoryId:
+ *           type: integer
+ *           example: 6
+ * 
+ *     ProductCreate:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           example: Gorgeous Cotton Pizza
+ *         description:
+ *           type: string
+ *           example: The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design
+ *         image:
+ *           type: string
+ *           format: uri
+ *           example: https://loremflickr.com/640/480/cats
+ *         stock:
+ *           type: integer
+ *           example: 0
+ *         price:
+ *           type: string
+ *           example: "907.00"
+ *         categoryId:
+ *           type: integer
+ *           example: 6
+ * 
+ *     Category:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: electronica
+ * 
+ *     CategoryCreate:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           example: electronica
+ * 
+ *     Review:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         rating:
+ *           type: integer
+ *           example: 4
+ *         review:
+ *           type: string
+ *           example: Descripcion de la reseña
+ *         userId:
+ *           type: integer
+ *           example: 4
+ *         productId:
+ *           type: integer
+ *           example: 8
+ * 
+ *     ReviewCreate:
+ *       type: object
+ *       properties:
+ *         rating:
+ *           type: integer
+ *           example: 4
+ *         review:
+ *           type: string
+ *           example: Descripcion de la reseña
+ *         userId:
+ *           type: integer
+ *           example: 4
+ *         productId:
+ *           type: integer
+ *           example: 8
+ * 
+ *     Users:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: Juanitokun19
+ *         email:
+ *           type: string
+ *           example: juanito@mail.com
+ *         password:
+ *           type: string
+ *           example: admin123
+ *         adress:
+ *           type: string
+ *           example: Mi casa
+ *         phoneNumber:
+ *           type: integer
+ *           example: 123456
+ *         admin:
+ *           type: boolean
+ *           example: false
+ *         active:
+ *           type: boolean
+ *           example: true
+ * 
+ *     UsersCreate:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           example: Juanitokun19
+ *         email:
+ *           type: string
+ *           example: juanito@mail.com
+ *         password:
+ *           type: string
+ *           example: admin123
+ *         adress:
+ *           type: string
+ *           example: Mi casa
+ *         phoneNumber:
+ *           type: integer
+ *           example: 123456
+ * 
+ *     ErrorBadRequest:
+ *       type: object
+ *       properties:
+ *         statusCode:
+ *           type: integer
+ *           example: 400
+ *         error:
+ *           type: string
+ *           example: Bad Request
+ *         message:
+ *           type: string
+ *           example: Mensaje de del error
+ * 
+ *     ErrorNotFound:
+ *       type: object
+ *       properties:
+ *         statusCode:
+ *           type: integer
+ *           example: 404
+ *         error:
+ *           type: string
+ *           example: Not Found
+ *         message:
+ *           type: string
+ *           example: Mensaje de del error
+ * 
+ *     ErrorDataBase:
+ *       type: object
+ *       properties:
+ *         statusCode:
+ *           type: integer
+ *           example: 409
+ *         error:
+ *           type: string
+ *           example: Error en la base de datos
+ *         errors:
+ *           type: array
+ *           items:
+ *              type: object
+ *              properties:
+ *                  data:
+ *                      type: string
+ *                      example: Toda la info sobre el error
+ *              
+ * 
+ *     ErrorServer:
+ *       type: object
+ *       properties:
+ *         statusCode:
+ *           type: integer
+ *           example: 500
+ *         error:
+ *           type: string
+ *           example: Error intero del servidor
+ *         message:
+ *           type: string
+ *           example: Favor de buscar al equipo de Backend :(
+ *         data:
+ *          type: object
+ *          properties:
+ *              message:
+ *                  type: string
+ *                  example: mensaje del error
+ *              stack:
+ *                  type: string
+ *                  example: info de ubiacion donde esta sucediendo el error
+ */
 const routerApi = app => {
     const router = express.Router();
     app.use('/api/v1', router);

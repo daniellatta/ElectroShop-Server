@@ -13,8 +13,13 @@ const boomErrorHandler = (err, req, res, next) => {
 
 const errorHanlder = (err, req, res, next) => {
     res.status(500).json({
-        message: err.message,
-        stack: err.stack
+        statusCode: 500,
+        error: 'Error intero del servidor',
+        message: 'Favor de buscar al equipo de Backend :(',
+        data: {
+            message: err.message,
+            stack: err.stack
+        }
     })
 }
 
