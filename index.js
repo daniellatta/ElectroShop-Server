@@ -32,6 +32,8 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
+require('./utils/auth');
+
 //Router
 routerApi(app);
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

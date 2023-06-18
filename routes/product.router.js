@@ -2,6 +2,7 @@ const express = require('express');
 const validorHanlder = require('../middleware/validaor.hanlder');
 const ProductService = require('../services/product.services');
 const { createProduct, searchProduct } = require('../schemas/product.schema');
+const rotuer = require('./auth.router');
 
 const router = express.Router();
 const service = new ProductService();
@@ -39,6 +40,17 @@ router.get('/', async ( req, res, next ) => {
     try {
         const products = await service.findAllProducts();
         res.json(products);
+    } catch (error) {
+        next(error)
+    }
+});
+
+
+router.get('/order/price', async ( req, res, next ) => {
+    const {min, max} = req.query;
+    try {
+        const products = await service.orderByPrice(min, max);
+        res.json(products)
     } catch (error) {
         next(error)
     }
@@ -231,5 +243,6 @@ router.get('/generate/:num', async ( req, res, next ) => {
         next(error);
     }
 });
+
 
 module.exports = router

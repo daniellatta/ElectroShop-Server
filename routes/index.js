@@ -4,6 +4,7 @@ const categoryRouter = require('./category.router');
 const productRouter = require('./product.router');
 const userRouter = require('./user.router')
 const reviewRouter = require('./review.router');
+const authRouter = require('./auth.router');
 
 /**
  * @swagger
@@ -199,7 +200,13 @@ const reviewRouter = require('./review.router');
  *         id:
  *           type: integer
  *           example: 1
+ *         dni:
+ *           type: integer
+ *           example: 1525698
  *         name:
+ *           type: string
+ *           example: Juan
+ *         username:
  *           type: string
  *           example: Juanitokun19
  *         email:
@@ -208,9 +215,55 @@ const reviewRouter = require('./review.router');
  *         password:
  *           type: string
  *           example: admin123
+ *         birthDate:
+ *           type: date
+ *           example: 01/01/1900
  *         adress:
  *           type: string
  *           example: Mi casa
+ *         city:
+ *           type: string
+ *           example: Mi ciudad
+ *         phoneNumber:
+ *           type: integer
+ *           example: 123456
+ *         admin:
+ *           type: boolean
+ *           example: false
+ *         active:
+ *           type: boolean
+ *           example: true
+ * 
+ *     UsersUpdate:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         dni:
+ *           type: integer
+ *           example: 1525698
+ *         name:
+ *           type: string
+ *           example: Juan
+ *         username:
+ *           type: string
+ *           example: Juanitokun19
+ *         email:
+ *           type: string
+ *           example: juanito@mail.com
+ *         password:
+ *           type: string
+ *           example: admin123
+ *         birthDate:
+ *           type: date
+ *           example: 01/01/1900
+ *         adress:
+ *           type: string
+ *           example: Mi casa
+ *         city:
+ *           type: string
+ *           example: Mi ciudad
  *         phoneNumber:
  *           type: integer
  *           example: 123456
@@ -224,7 +277,13 @@ const reviewRouter = require('./review.router');
  *     UsersCreate:
  *       type: object
  *       properties:
+ *         dni:
+ *           type: integer
+ *           example: 1525698
  *         name:
+ *           type: string
+ *           example: Juan
+ *         username:
  *           type: string
  *           example: Juanitokun19
  *         email:
@@ -233,9 +292,15 @@ const reviewRouter = require('./review.router');
  *         password:
  *           type: string
  *           example: admin123
+ *         birthDate:
+ *           type: date
+ *           example: 01/01/1900
  *         adress:
  *           type: string
  *           example: Mi casa
+ *         city:
+ *           type: string
+ *           example: Mi ciudad
  *         phoneNumber:
  *           type: integer
  *           example: 123456
@@ -315,6 +380,7 @@ const routerApi = app => {
     router.use('/product', productRouter);
     router.use('/user',userRouter)
     router.use('/review', reviewRouter);
+    router.use('/auth', authRouter);
 }
 
 module.exports = routerApi;
