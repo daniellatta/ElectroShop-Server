@@ -7,6 +7,8 @@ const image = Joi.string();
 const stock = Joi.number().integer().min(0);
 const price = Joi.number().precision(2);
 const categoryId = Joi.number().integer();
+const tagId = Joi.number().integer();
+const productId = Joi.number().integer();
 
 const createProduct = Joi.object({
     name: name.required(),
@@ -31,8 +33,14 @@ const searchProduct = Joi.object({
     name
 });
 
+const addTags = Joi.object({
+    productId: productId.required(),
+    tagId: tagId.required()
+});
+
 module.exports = {
     createProduct,
     updateProduct,
-    searchProduct
+    searchProduct,
+    addTags
 }

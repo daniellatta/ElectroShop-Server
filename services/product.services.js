@@ -16,6 +16,11 @@ class ProductService {
     return product;
   }
 
+  async addTag(data) {
+    const newTag = await models.ProductTag.create(data);
+    return newTag;
+  }
+
   async findAllProducts() {
     const products = await models.Product.findAll({
       include: ['category'],
@@ -54,7 +59,9 @@ class ProductService {
         attributes: {
           exclude: ['userId', 'productId'] //Quita esas columnas de la primiedad reviews
         }
-      }]
+      },
+        'tags'
+      ]
     });
     if(!product) {
       throw boom.notFound(`Producto con id: ${id} no encontrado`);

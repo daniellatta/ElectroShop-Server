@@ -1,8 +1,7 @@
 const express = require('express');
 const validorHanlder = require('../middleware/validaor.hanlder');
 const ProductService = require('../services/product.services');
-const { createProduct, searchProduct } = require('../schemas/product.schema');
-const rotuer = require('./auth.router');
+const { createProduct, searchProduct, addTags } = require('../schemas/product.schema');
 
 const router = express.Router();
 const service = new ProductService();
@@ -228,6 +227,16 @@ router.post('/', validorHanlder(createProduct, 'body'), async ( req, res, next )
     try {
         const product = await service.createProduct(body);
         res.json(product);
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.post('/add-tag', validorHanlder(addTags, 'body'), async ( req, res, next ) => {
+    const body = req.body
+    try {
+        const newTag = await service.addTag(body);
+        res.json(newTag);
     } catch (error) {
         next(error)
     }

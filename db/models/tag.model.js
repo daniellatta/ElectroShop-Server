@@ -17,10 +17,12 @@ const TagSchema = {
 
 class Tag extends Model {
     static associate(models){
-        this.hasMany(models.Product, {
+        this.belongsToMany(models.Product, {
             as: 'products',
+            through: models.ProductTag,
             foreignKey: 'tagId',
-        })
+            otherKey: 'productId'
+        });
     }
 
     static config(sequelize) {
