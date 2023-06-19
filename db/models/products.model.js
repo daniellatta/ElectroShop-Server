@@ -55,6 +55,12 @@ class Product extends Model {
             as: 'reviews',
             foreignKey: 'productId'
         });
+        this.belongsToMany(models.Tag, {
+            as: 'tags',
+            through: models.ProductTag,
+            foreignKey: 'productId',
+            otherKey: 'tagId'
+        })
     }
 
     static config(sequelize) {

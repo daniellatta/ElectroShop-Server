@@ -1,7 +1,7 @@
 const express = require('express');
 const validorHanlder = require('../middleware/validaor.hanlder');
 const ProductService = require('../services/product.services');
-const { createProduct, searchProduct } = require('../schemas/product.schema');
+const { createProduct, searchProduct, addTags } = require('../schemas/product.schema');
 
 const router = express.Router();
 const service = new ProductService();
@@ -39,6 +39,17 @@ router.get('/', async ( req, res, next ) => {
     try {
         const products = await service.findAllProducts();
         res.json(products);
+    } catch (error) {
+        next(error)
+    }
+});
+
+
+router.get('/order/price', async ( req, res, next ) => {
+    const {min, max} = req.query;
+    try {
+        const products = await service.orderByPrice(min, max);
+        res.json(products)
     } catch (error) {
         next(error)
     }
@@ -118,7 +129,7 @@ router.get('/find/:name', validorHanlder(searchProduct, 'params'), async ( req, 
  *         content:
  *           application/json:
  *             schema:
- *                 $ref: '#/components/schemas/Product'
+ *                 $ref: '#/components/schemas/ProductDetail'
  *       400:
  *         description: Bad Request
  *         content:
@@ -192,6 +203,12 @@ router.get('/:id', validorHanlder(searchProduct, 'params'), async ( req, res, ne
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorBadRequest'
+ *       404:
+ *         description: Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorNotFound'
  *       409:
  *         description: Error en database
  *         content:
@@ -215,6 +232,16 @@ router.post('/', validorHanlder(createProduct, 'body'), async ( req, res, next )
     }
 })
 
+router.post('/add-tag', validorHanlder(addTags, 'body'), async ( req, res, next ) => {
+    const body = req.body
+    try {
+        const newTag = await service.addTag(body);
+        res.json(newTag);
+    } catch (error) {
+        next(error)
+    }
+})
+
 router.get('/generate/:num', async ( req, res, next ) => {
     const { num } = req.params;
     try {
@@ -225,5 +252,6 @@ router.get('/generate/:num', async ( req, res, next ) => {
         next(error);
     }
 });
+
 
 module.exports = router

@@ -4,6 +4,8 @@ const categoryRouter = require('./category.router');
 const productRouter = require('./product.router');
 const userRouter = require('./user.router')
 const reviewRouter = require('./review.router');
+const authRouter = require('./auth.router');
+const tagRouter = require('./tag.router.js');
 
 /**
  * @swagger
@@ -36,6 +38,58 @@ const reviewRouter = require('./review.router');
  *           example: null / 3.9
  *         category:
  *           $ref: '#/components/schemas/Category'
+ * 
+ *     ProductDetail:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: Gorgeous Cotton Pizza
+ *         description:
+ *           type: string
+ *           example: The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design
+ *         image:
+ *           type: string
+ *           format: uri
+ *           example: https://loremflickr.com/640/480/cats
+ *         stock:
+ *           type: integer
+ *           example: 0
+ *         price:
+ *           type: string
+ *           example: "907.00"
+ *         review:
+ *           type: string
+ *           example: null / 3.9
+ *         category:
+ *           $ref: '#/components/schemas/Category'
+ *         reviews:
+ *           type: array
+ *           items:
+ *              type: object
+ *              properties:
+ *                  id:
+ *                      type: integer
+ *                      example: 1
+ *                  rating:
+ *                      type: integer
+ *                      example: 4
+ *                  review:
+ *                      type: string
+ *                      example: Descripcion de la reseña
+ *                  user:
+ *                      type: object
+ *                      properties:
+ *                          id:
+ *                              type: integer
+ *                              example: 5
+ *                          name:
+ *                              type: string
+ *                              example: Juanitokun
+ *              
  * 
  *     ProductResponseCreate:
  *       type: object
@@ -147,7 +201,13 @@ const reviewRouter = require('./review.router');
  *         id:
  *           type: integer
  *           example: 1
+ *         dni:
+ *           type: integer
+ *           example: 1525698
  *         name:
+ *           type: string
+ *           example: Juan
+ *         username:
  *           type: string
  *           example: Juanitokun19
  *         email:
@@ -156,9 +216,55 @@ const reviewRouter = require('./review.router');
  *         password:
  *           type: string
  *           example: admin123
+ *         birthDate:
+ *           type: date
+ *           example: 01/01/1900
  *         adress:
  *           type: string
  *           example: Mi casa
+ *         city:
+ *           type: string
+ *           example: Mi ciudad
+ *         phoneNumber:
+ *           type: integer
+ *           example: 123456
+ *         admin:
+ *           type: boolean
+ *           example: false
+ *         active:
+ *           type: boolean
+ *           example: true
+ * 
+ *     UsersUpdate:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         dni:
+ *           type: integer
+ *           example: 1525698
+ *         name:
+ *           type: string
+ *           example: Juan
+ *         username:
+ *           type: string
+ *           example: Juanitokun19
+ *         email:
+ *           type: string
+ *           example: juanito@mail.com
+ *         password:
+ *           type: string
+ *           example: admin123
+ *         birthDate:
+ *           type: date
+ *           example: 01/01/1900
+ *         adress:
+ *           type: string
+ *           example: Mi casa
+ *         city:
+ *           type: string
+ *           example: Mi ciudad
  *         phoneNumber:
  *           type: integer
  *           example: 123456
@@ -172,7 +278,13 @@ const reviewRouter = require('./review.router');
  *     UsersCreate:
  *       type: object
  *       properties:
+ *         dni:
+ *           type: integer
+ *           example: 1525698
  *         name:
+ *           type: string
+ *           example: Juan
+ *         username:
  *           type: string
  *           example: Juanitokun19
  *         email:
@@ -181,9 +293,15 @@ const reviewRouter = require('./review.router');
  *         password:
  *           type: string
  *           example: admin123
+ *         birthDate:
+ *           type: date
+ *           example: 01/01/1900
  *         adress:
  *           type: string
  *           example: Mi casa
+ *         city:
+ *           type: string
+ *           example: Mi ciudad
  *         phoneNumber:
  *           type: integer
  *           example: 123456
@@ -263,6 +381,8 @@ const routerApi = app => {
     router.use('/product', productRouter);
     router.use('/user',userRouter)
     router.use('/review', reviewRouter);
+    router.use('/auth', authRouter);
+    router.use('/tag', tagRouter);
 }
 
 module.exports = routerApi;

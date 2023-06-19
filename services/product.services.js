@@ -16,6 +16,11 @@ class ProductService {
     return product;
   }
 
+  async addTag(data) {
+    const newTag = await models.ProductTag.create(data);
+    return newTag;
+  }
+
   async findAllProducts() {
     const products = await models.Product.findAll({
       include: ['category'],
@@ -50,9 +55,13 @@ class ProductService {
           model: models.User,
           as: 'user',
           attributes: ['id', 'name'] // Selecciona los atributos del usuario que deseas incluir
+        },
+        attributes: {
+          exclude: ['userId', 'productId'] //Quita esas columnas de la primiedad reviews
         }
-      }],
-      attributes: { exclude: ['categoryId'] }
+      },
+        'tags'
+      ]
     });
     if(!product) {
       throw boom.notFound(`Producto con id: ${id} no encontrado`);
@@ -72,6 +81,21 @@ class ProductService {
       });
     }
     return { msg: `${num} products creado correctamente`}
+  }
+
+  async orderByPrice (min, max) {
+    const products = await models.Product.findAll({
+      where: {
+        price: {
+          [Op.between]: [min, max]
+        }
+      }
+    });
+    if(!products) {
+      throw boom.notFound('Productos no encontrados en ese rango de precio');
+    }
+    products.sort((a, b) => a.price - b.price);
+    return products;
   }
 }
 
