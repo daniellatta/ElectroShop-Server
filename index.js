@@ -4,7 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const cors = require('cors');
 const routerApi = require('./routes/index');
-const { boomErrorHandler, errorHanlder, errroHablderDb, logError } = require('./middleware/error.hanlder');
+const { boomErrorHandler, errorHanlder, errroHablderDb, logError, boomErrorHandlerData } = require('./middleware/error.hanlder');
 
 const app = express();
 const PORT = 8080;
@@ -42,6 +42,7 @@ app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(logError);
 app.use(boomErrorHandler);
 app.use(errroHablderDb);
+app.use(boomErrorHandlerData);
 app.use(errorHanlder);
 
 app.listen(PORT, () => {

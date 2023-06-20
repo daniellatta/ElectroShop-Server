@@ -11,6 +11,17 @@ const boomErrorHandler = (err, req, res, next) => {
     }
   }
 
+  const boomErrorHandlerData = (err, req, res, next) => {
+    console.log(err);
+    if (err?.data?.isBoom) {
+      const { output } = err.data;
+      res.status(output.statusCode).json({status: err.status, data: output.payload});
+    }
+    else {
+      next(err);
+    }
+  }
+
 const errorHanlder = (err, req, res, next) => {
     res.status(500).json({
         statusCode: 500,
@@ -44,5 +55,6 @@ module.exports = {
     boomErrorHandler,
     errorHanlder,
     errroHablderDb,
-    logError
+    logError,
+    boomErrorHandlerData
 }
