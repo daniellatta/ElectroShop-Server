@@ -36,7 +36,7 @@ const service = new CategoryService();
  *               $ref: '#/components/schemas/ErrorServer'
  */
 router.get('/', async ( req, res ) => {
-    const categories = service.allCategories();
+    const categories = await service.allCategories();
     res.json(categories);
 });
 
