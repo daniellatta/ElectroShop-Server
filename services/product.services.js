@@ -60,7 +60,11 @@ class ProductService {
           exclude: ['userId', 'productId'] //Quita esas columnas de la primiedad reviews
         }
       },
-        'tags'
+      {
+        model: models.Tag,
+        as: 'tags',
+        through: { attributes: [] } // Excluye la tabla intermedia ProductTag
+      }
       ]
     });
     if(!product) {

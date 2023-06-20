@@ -160,6 +160,72 @@ const tagRouter = require('./tag.router.js');
  *           type: string
  *           example: electronica
  * 
+ *     AuthLogin:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: juanito@mail.com
+ *         password:
+ *           type: string
+ *           example: admin123
+ * 
+ *     Tag:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: RGB
+ * 
+ *     TagCreate:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           example: RGB
+ * 
+ *     TagDetail:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 2
+ *         name:
+ *           type: string
+ *           example: RGB
+ *         products:
+ *           type: array
+ *           items:
+ *              type: object
+ *              properties:
+ *                  id:
+ *                      type: integer
+ *                      example: 3
+ *                  name:
+ *                      type: string
+ *                      example: RTX 3080
+ *                  description:
+ *                      type: string
+ *                      example: description product
+ *                  image:
+ *                      type: string
+ *                      example: https://image.com
+ *                  stock:
+ *                      type: integer
+ *                      example: 6
+ *                  price:
+ *                      type: integer
+ *                      example: 699.99
+ *                  categoryId:
+ *                      type: integer
+ *                      example: 1
+ *                  review:
+ *                      type: string
+ *                      example: null/2.5
+ * 
  *     Review:
  *       type: object
  *       properties:
@@ -213,9 +279,6 @@ const tagRouter = require('./tag.router.js');
  *         email:
  *           type: string
  *           example: juanito@mail.com
- *         password:
- *           type: string
- *           example: admin123
  *         birthDate:
  *           type: date
  *           example: 01/01/1900
@@ -332,6 +395,25 @@ const tagRouter = require('./tag.router.js');
  *           type: string
  *           example: Mensaje de del error
  * 
+ *     ErrorUnauthorized:
+ *       type: object
+ *       properties:
+ *         statsu:
+ *          type: boolean
+ *          example: false
+ *         data:
+ *          type: object
+ *          properties:
+ *              statusCode:
+ *                  type: integer
+ *                  example: 401
+ *              error:
+ *                  type: string
+ *                  example: Unauthorized
+ *              message:
+ *                  type: string
+ *                  example: Mensaje de del error
+ * 
  *     ErrorDataBase:
  *       type: object
  *       properties:
@@ -372,6 +454,7 @@ const tagRouter = require('./tag.router.js');
  *              stack:
  *                  type: string
  *                  example: info de ubiacion donde esta sucediendo el error
+ * 
  */
 const routerApi = app => {
     const router = express.Router();

@@ -44,9 +44,8 @@ router.get('/', async ( req, res, next ) => {
     }
 });
 
-
 router.get('/order/price', async ( req, res, next ) => {
-    const {min, max} = req.query;
+    const { min, max } = req.query;
     try {
         const products = await service.orderByPrice(min, max);
         res.json(products)
@@ -232,6 +231,104 @@ router.post('/', validorHanlder(createProduct, 'body'), async ( req, res, next )
     }
 })
 
+/**
+ * @swagger
+ * /product/add-tag:
+ *   post:
+ *     tags:
+ *       - Products
+ *     summary: Endpoint para crear una tag en productos
+ *     description: Agregar una tag a un producto
+ *     operationId: addProductTag
+ *     requestBody:
+ *       description: Elementos requeridos para crear un producto
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *                  productId:
+ *                      type: integer
+ *                      example: 3
+ *                  tagId:
+ *                      type: integer
+ *                      example: 2
+ *         application/xml:
+ *           schema:
+ *             type: object
+ *             properties:
+ *                  productId:
+ *                      type: integer
+ *                      example: 3
+ *                  tagId:
+ *                      type: integer
+ *                      example: 2
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *                  productId:
+ *                      type: integer
+ *                      example: 3
+ *                  tagId:
+ *                      type: integer
+ *                      example: 2
+ *     responses:
+ *       200:
+ *         description: Articulo creado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  id:
+ *                      type: integer
+ *                      example: 1
+ *                  productId:
+ *                      type: integer
+ *                      example: 3
+ *                  tagId:
+ *                      type: integer
+ *                      example: 2        
+ *           application/xml:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  id:
+ *                      type: integer
+ *                      example: 1
+ *                  productId:
+ *                      type: integer
+ *                      example: 3
+ *                  tagId:
+ *                      type: integer
+ *                      example: 2      
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorBadRequest'
+ *       404:
+ *         description: Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorNotFound'
+ *       409:
+ *         description: Error en database
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorDataBase'
+ *       500:
+ *         description: Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorServer'
+ */
 router.post('/add-tag', validorHanlder(addTags, 'body'), async ( req, res, next ) => {
     const body = req.body
     try {
