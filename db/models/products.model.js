@@ -38,7 +38,7 @@ const ProductSchema = {
         references: {
             model: CATEGORY_TABLE,
             key: 'id'
-          },
+        },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
     },
@@ -60,6 +60,12 @@ class Product extends Model {
             through: models.ProductTag,
             foreignKey: 'productId',
             otherKey: 'tagId'
+        })
+        this.belongsToMany(models.Orders, {
+            as: 'orders',
+            through: models.OrderProducts,
+            foreignKey: 'productId',
+            otherKey: 'orderId'
         })
     }
 
