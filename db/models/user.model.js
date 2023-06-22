@@ -69,6 +69,10 @@ class User extends Model {
             as: 'reviews',
             foreignKey: 'userId'
         });
+        this.hasMany(models.Orders, {
+            as: 'orders',
+            foreignKey: 'userId'
+        });
     }
 
     static config(sequelize) {
