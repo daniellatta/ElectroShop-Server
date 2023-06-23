@@ -1,7 +1,7 @@
 const boom = require('@hapi/boom');
 const { faker } = require('@faker-js/faker');
 const { Op } = require('sequelize');
-const { models } = require('../libs/sequelize');
+const { models, Sequelize } = require('../libs/sequelize');
 const CategoryService = require('./category.services');
 
 const service = new CategoryService();
@@ -99,6 +99,41 @@ class ProductService {
       throw boom.notFound('Productos no encontrados en ese rango de precio');
     }
     products.sort((a, b) => a.price - b.price);
+    return products;
+  }
+
+  async orderByCategory(id) {
+    await service.findCategory(id);
+    const products = await models.Product.findAll({
+      where: {
+        categoryId: id
+      },
+      order: [['name', 'ASC']],
+      include: 'category',
+      attributes: { exclude: ['categoryId'] }
+    });
+    if(!products.length) {
+      throw boom.notFound('No se encontraron prouductos con esa categoria ');
+    }
+    return products;
+  }
+
+  async orderByReviews() {
+    const products = await models.Product.findAll({
+      order: [['review', 'ASC']]
+    });
+    return products
+  }
+  
+  async orderBySold() {
+    const products = await models.Product.findAll({
+      order: [['sold', 'DESC']]
+    });
+
+    if(!products.length) {
+      throw boom.notFound('No se encontrar poroductos vendidos');
+    }
+
     return products;
   }
 }

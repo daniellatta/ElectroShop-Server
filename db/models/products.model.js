@@ -44,6 +44,10 @@ const ProductSchema = {
     },
     review: {
         type: DataTypes.DECIMAL(2,1)
+    },
+    sold: {
+        defaultValue: 0,
+        type: DataTypes.INTEGER,
     }
 }
 

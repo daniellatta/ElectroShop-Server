@@ -33,6 +33,7 @@ class OrderServices {
                     unitPrice: product.unitPrice,
                     discount: product.discount
                 });
+                await sequelize.query(`SELECT fun_sumavendidos(${product.productId}, ${product.quantity})`); 
             }
         }
         return order;
@@ -42,13 +43,16 @@ class OrderServices {
         const order = await models.Orders.findByPk(id, {
             include: [
                 {
-                    model: models.Product,
-                    as: 'products',
-                    through: {
-                        attributes: [] // Excluir la tabla de unión OrderProducts
-                    },
-                    }
-                ]
+                  model: models.Product,
+                  as: 'products',
+                  through: {
+                    attributes: ['quantity'], // Incluir solo la columna de cantidad desde la tabla de unión OrderProducts
+                  },
+                  attributes: {
+                    exclude: ['OrderProducts'] // Excluir la relación OrderProducts en la respuesta
+                  }
+                },
+              ],
         });
         if(!order){
             throw boom.notFound(`No se enecuentra ordenes cargados en la base de datos con el id ${id}`);
