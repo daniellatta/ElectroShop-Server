@@ -7,6 +7,11 @@ class UserService {
     constructor(){}
 
     async createUser (data) {
+
+        await this.findByDNI(data.dni);
+        await this.findByEmailCreate(data.emial);
+        await this.findByPhone(data.phoneNumber);
+        
         const hash = await bcrypt.hash(data.password, 10);
         const newUser = await models.User.create({
             ...data,
@@ -22,6 +27,33 @@ class UserService {
             throw boom.notFound(`Usuarios no encontrados`);
         }
         return users
+    }
+
+    async findByDNI(dni) {
+        const user = await models.User.findOne({
+            where: { dni }
+        });
+        if (user) {
+            return boom.conflict(`Ya existe un usuario con ese dni: ${dni}`);
+        }
+    }
+
+    async findByEmailCreate(email) {
+        const user = await models.User.findOne({
+            where: { email }
+        });
+        if (user) {
+            return boom.conflict(`Ya existe un usuario con ese email: ${email}}`);
+        }
+    }
+
+    async findByPhone(phoneNumber) {
+        const user = await models.User.findOne({
+            where: { phoneNumber }
+        });
+        if (user) {
+            return boom.conflict(`Ya existe un usuario con ese phone: ${phoneNumber}`);
+        }
     }
 
     async findUserByID(id){

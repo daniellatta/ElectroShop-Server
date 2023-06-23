@@ -54,6 +54,34 @@ router.get('/order/price', async ( req, res, next ) => {
     }
 });
 
+router.get('/order/category/:id', async ( req, res, next ) => {
+    const { id } = req.params;
+    try {
+        const products = await service.orderByCategory(id);
+        res.json(products );
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.get('/order/reviews', async ( req, res, next ) => {
+    try {
+        const products = await service.orderByReviews();
+        res.json(products);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.get('/order/sold', async ( req, res, next ) => {
+    try {
+        const products = await service.orderBySold();
+        res.json(products);
+    } catch (error) {
+        next(error);
+    }
+});
+
 /**
  * @swagger
  * /product/find/{name}:
