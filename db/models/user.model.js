@@ -12,7 +12,7 @@ const UserSchema = {
     dni: {
         allowNull: false,
         unique: true,
-        type: DataTypes.INTEGER
+        type: DataTypes.BIGINT
     },
     name: {
         allowNull: false,
@@ -49,7 +49,7 @@ const UserSchema = {
         field:'phone_number',
         allowNull: false,
         unique: true,
-        type: DataTypes.INTEGER
+        type: DataTypes.BIGINT
     },
     admin: {
         allowNull: false,
