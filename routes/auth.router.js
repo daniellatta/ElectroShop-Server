@@ -81,4 +81,18 @@ rotuer.post('/login', passport.authenticate('local', { session: false }), async 
     }
 });
 
+rotuer.get('/login/google', passport.authenticate('google', {
+    scope: [
+        'https://www.googleapis.com/auth/userinfo.email',
+        'https://www.googleapis.com/auth/userinfo.profile',
+      ],
+    session: false
+  }), async ( req, res, next ) => {
+    try {
+        res.json(req.user)
+    } catch (error) {
+        next(error);
+    }
+});
+
 module.exports = rotuer;
