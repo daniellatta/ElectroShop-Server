@@ -123,6 +123,17 @@ class UserService {
         return user;
     }
 
+    async authByGoogleId(id) {
+        const user = await models.User.findOne({
+            where: { googleId: id }
+        });
+        return user;
+    }
+
+    async authCreateGoogleUser(data) {
+        await models.User.create(data);
+    }
+
 }
 
 module.exports = UserService

@@ -10,7 +10,6 @@ const UserSchema = {
         type: DataTypes.INTEGER
     },
     dni: {
-        allowNull: false,
         unique: true,
         type: DataTypes.BIGINT
     },
@@ -19,7 +18,6 @@ const UserSchema = {
         type: DataTypes.STRING
     },
     username:{
-        allowNull: false,
         unique: true,
         type: DataTypes.STRING
     },
@@ -34,20 +32,16 @@ const UserSchema = {
     },
     birthDate: {
         field:'birth_date',
-        allowNull: false,
         type: DataTypes.DATEONLY
     },
     adress: {
-        allowNull: false, 
         type: DataTypes.STRING
     },
     city: {
-        allowNull: false,
         type: DataTypes.STRING
     },
     phoneNumber: {
         field:'phone_number',
-        allowNull: false,
         unique: true,
         type: DataTypes.BIGINT
     },
@@ -60,6 +54,10 @@ const UserSchema = {
         allowNull: false,
         defaultValue: true,
         type: DataTypes.BOOLEAN
+    },
+    googleId: {
+        field: 'google_id',
+        type: DataTypes.STRING,
     }
 }
 
